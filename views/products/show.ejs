@@ -1,0 +1,71 @@
+<% layout('layout/boilerplate') -%>
+
+<div class="row" style="margin-top: 100px;">
+
+    <div class="col-lg-6">
+
+        <div class="card" style="width: 18rem;">
+          <img src="<%= product.img %>" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"><%= product.name %></h5>
+              <p class="card-text"><%= product.desc %></p>
+              <h5> $: <%= product.price %></h5>
+
+              <a href="/products/<%= product._id %>/edit"><button><strong>Edit</strong></button></a>
+              
+              <form method="post" action="/products/<%=product._id %>/cart" class="d-inline">
+                <button class="btn btn-sm btn-success"><strong>Add to cart</strong></button>
+              </form>
+              <form method="post" action="/products/<%=product._id %>?_method=DELETE" class="d-inline">
+                   <button class="btn btn-sm btn-danger"><strong>Delete</strong></button>
+              </form>
+            </div>
+          </div>    
+    </div>
+
+    <div class="col-lg-6">
+
+      <h1>Add a review</h1>
+      <form action="/products/<%= product._id %>/review" method="post">
+        <fieldset class="starability-basic">
+          <legend>First rating:</legend>
+          <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
+          <input type="radio" id="first-rate1" name="rating" value="1" />
+          <label for="first-rate1" title="Terrible">1 star</label>
+          <input type="radio" id="first-rate2" name="rating" value="2" />
+          <label for="first-rate2" title="Not good">2 stars</label>
+          <input type="radio" id="first-rate3" name="rating" value="3" />
+          <label for="first-rate3" title="Average">3 stars</label>
+          <input type="radio" id="first-rate4" name="rating" value="4" />
+          <label for="first-rate4" title="Very good">4 stars</label>
+          <input type="radio" id="first-rate5" name="rating" value="5" />
+          <label for="first-rate5" title="Amazing">5 stars</label>
+        </fieldset>
+        
+          <div class="mb-3">
+              <label for="rating" class="form-label">Comment</label>
+              <textarea class="form-control" name="comment" id="comment" rows="3"></textarea>
+  
+          </div>
+          <button type="submit" class="btn btn-sm btn-success">Add a review</button>
+
+      </form>
+      <div class="mb-3">
+
+         <% for(let review of product.reviews){ %>
+
+          
+          <div class="card text-bg-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header stara">Rating: <%=review.rating %></div>
+            <div class="card-body">
+              <h5 class="card-title">user: <%= currUser.username %></h5>
+              <p class="card-text">Comment: <%= review.comment%></p>
+            </div>
+          </div>
+         
+        <% } %>
+
+      </div>
+    
+  </div>
+</div>
